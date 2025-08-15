@@ -1,13 +1,14 @@
-package app.ahuggett.betsimapp
+package app.ahuggett.betsimapp.data
 
+import app.ahuggett.betsimapp.data.teams.Team
 import org.apache.commons.math3.fraction.Fraction
 import java.time.Instant
 import java.time.ZoneId
 
 data class OddsData(
     val matchId: String,
-    val homeTeam: String,
-    val awayTeam: String,
+    val homeTeam: Team,
+    val awayTeam: Team,
     val homeOdds: Double,
     val drawOdds: Double,
     val awayOdds: Double,
