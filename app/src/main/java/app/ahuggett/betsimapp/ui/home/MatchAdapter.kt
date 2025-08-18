@@ -60,9 +60,6 @@ class MatchAdapter(private val matches: List<OddsData>) : RecyclerView.Adapter<R
         private val btnHomeOdds: Button = itemView.findViewById(R.id.btn_home_odds)
         private val btnDrawOdds: Button = itemView.findViewById(R.id.btn_draw_odds)
         private val btnAwayOdds: Button = itemView.findViewById(R.id.btn_away_odds)
-        private val homeFraction: TextView = itemView.findViewById(R.id.home_fraction)
-        private val drawFraction: TextView = itemView.findViewById(R.id.draw_fraction)
-        private val awayFraction: TextView = itemView.findViewById(R.id.away_fraction)
 
         fun bind(match: OddsData) {
             teams.text = "${match.homeTeam.displayName} vs ${match.awayTeam.displayName}"
@@ -73,13 +70,9 @@ class MatchAdapter(private val matches: List<OddsData>) : RecyclerView.Adapter<R
             homeBadge.setImageResource(match.homeTeam.badge)
             awayBadge.setImageResource(match.awayTeam.badge)
 
-            btnHomeOdds.text = String.format("%.2f", match.homeOdds)
-            btnDrawOdds.text = String.format("%.2f", match.drawOdds)
-            btnAwayOdds.text = String.format("%.2f", match.awayOdds)
-
-            homeFraction.text = match.homeOddsFraction
-            drawFraction.text = match.drawOddsFraction
-            awayFraction.text = match.awayOddsFraction
+            btnHomeOdds.text = match.homeOddsFraction
+            btnDrawOdds.text = match.drawOddsFraction
+            btnAwayOdds.text = match.awayOddsFraction
         }
     }
 
