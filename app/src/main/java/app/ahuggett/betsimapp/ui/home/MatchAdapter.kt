@@ -64,7 +64,7 @@ class MatchAdapter(private val matches: List<OddsData>) : RecyclerView.Adapter<R
         fun bind(match: OddsData) {
             teams.text = "${match.homeTeam.displayName} vs ${match.awayTeam.displayName}"
 
-            val formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy 'at' HH:mm")
+            val formatter = DateTimeFormatter.ofPattern("EEE dd MMM 'at' HH:mm")
             kickoff.text = match.kickoffDate.format(formatter)
 
             homeBadge.setImageResource(match.homeTeam.badge)

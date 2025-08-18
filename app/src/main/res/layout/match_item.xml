@@ -47,8 +47,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="Kickoff Time"
+                    android:textStyle="italic"
                     android:textSize="14sp"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="@android:color/black"
                     android:layout_marginTop="4dp" />
 
             </LinearLayout>
@@ -81,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:text="Home"
                     android:textSize="12sp"
-                    android:textColor="@android:color/darker_gray" />
+                    android:textColor="@android:color/black" />
 
                 <Button
                     android:id="@+id/btn_home_odds"
@@ -109,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:text="Draw"
                     android:textSize="12sp"
-                    android:textColor="@android:color/darker_gray" />
+                    android:textColor="@android:color/black" />
 
                 <Button
                     android:id="@+id/btn_draw_odds"
@@ -136,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:text="Away"
                     android:textSize="12sp"
-                    android:textColor="@android:color/darker_gray" />
+                    android:textColor="@android:color/black" />
 
                 <Button
                     android:id="@+id/btn_away_odds"
