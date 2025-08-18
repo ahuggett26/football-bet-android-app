@@ -55,20 +55,20 @@ class MatchAdapter(private val matches: List<OddsData>) : RecyclerView.Adapter<R
     class MatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val homeBadge: ImageView = itemView.findViewById(R.id.home_badge)
         private val awayBadge: ImageView = itemView.findViewById(R.id.away_badge)
-        private val tvTeams: TextView = itemView.findViewById(R.id.tv_teams)
-        private val tvKickoff: TextView = itemView.findViewById(R.id.tv_kickoff)
+        private val teams: TextView = itemView.findViewById(R.id.teams)
+        private val kickoff: TextView = itemView.findViewById(R.id.kickoff)
         private val btnHomeOdds: Button = itemView.findViewById(R.id.btn_home_odds)
         private val btnDrawOdds: Button = itemView.findViewById(R.id.btn_draw_odds)
         private val btnAwayOdds: Button = itemView.findViewById(R.id.btn_away_odds)
-        private val tvHomeFraction: TextView = itemView.findViewById(R.id.tv_home_fraction)
-        private val tvDrawFraction: TextView = itemView.findViewById(R.id.tv_draw_fraction)
-        private val tvAwayFraction: TextView = itemView.findViewById(R.id.tv_away_fraction)
+        private val homeFraction: TextView = itemView.findViewById(R.id.home_fraction)
+        private val drawFraction: TextView = itemView.findViewById(R.id.draw_fraction)
+        private val awayFraction: TextView = itemView.findViewById(R.id.away_fraction)
 
         fun bind(match: OddsData) {
-            tvTeams.text = "${match.homeTeam.displayName} vs ${match.awayTeam.displayName}"
+            teams.text = "${match.homeTeam.displayName} vs ${match.awayTeam.displayName}"
 
             val formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy 'at' HH:mm")
-            tvKickoff.text = match.kickoffDate.format(formatter)
+            kickoff.text = match.kickoffDate.format(formatter)
 
             homeBadge.setImageResource(match.homeTeam.badge)
             awayBadge.setImageResource(match.awayTeam.badge)
@@ -77,9 +77,9 @@ class MatchAdapter(private val matches: List<OddsData>) : RecyclerView.Adapter<R
             btnDrawOdds.text = String.format("%.2f", match.drawOdds)
             btnAwayOdds.text = String.format("%.2f", match.awayOdds)
 
-            tvHomeFraction.text = match.homeOddsFraction
-            tvDrawFraction.text = match.drawOddsFraction
-            tvAwayFraction.text = match.awayOddsFraction
+            homeFraction.text = match.homeOddsFraction
+            drawFraction.text = match.drawOddsFraction
+            awayFraction.text = match.awayOddsFraction
         }
     }
 

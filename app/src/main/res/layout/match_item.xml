@@ -32,7 +32,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_teams"
+                    android:id="@+id/teams"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -42,7 +42,7 @@
                     android:textColor="@android:color/black" />
 
                 <TextView
-                    android:id="@+id/tv_kickoff"
+                    android:id="@+id/kickoff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -94,7 +94,7 @@
                     android:layout_marginTop="4dp" />
 
                 <TextView
-                    android:id="@+id/tv_home_fraction"
+                    android:id="@+id/home_fraction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="3/10"
@@ -131,7 +131,7 @@
                     android:layout_marginTop="4dp" />
 
                 <TextView
-                    android:id="@+id/tv_draw_fraction"
+                    android:id="@+id/draw_fraction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="19/4"
@@ -167,7 +167,7 @@
                     android:layout_marginTop="4dp" />
 
                 <TextView
-                    android:id="@+id/tv_away_fraction"
+                    android:id="@+id/away_fraction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="15/2"
