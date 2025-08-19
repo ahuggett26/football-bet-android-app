@@ -84,7 +84,7 @@
                     android:textSize="12sp"
                     android:textColor="@android:color/black" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_home_odds"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -112,7 +112,7 @@
                     android:textSize="12sp"
                     android:textColor="@android:color/black" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_draw_odds"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -139,7 +139,7 @@
                     android:textSize="12sp"
                     android:textColor="@android:color/black" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_away_odds"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"

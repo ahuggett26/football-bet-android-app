@@ -6,12 +6,23 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.getColor
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.RecyclerView
 import app.ahuggett.betsimapp.data.OddsData
 import app.ahuggett.betsimapp.R
+import app.ahuggett.betsimapp.data.bet.Bet
+import app.ahuggett.betsimapp.data.bet.BetRepository
+import app.ahuggett.betsimapp.data.bet.BetType
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import java.time.format.DateTimeFormatter
 
-class MatchAdapter(private val matches: List<OddsData>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MatchAdapter(
+    private val matches: List<OddsData>,
+    private val betRepository: BetRepository,
+    private val coroutineScope: CoroutineScope
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val VIEW_TYPE_MATCH = 1
@@ -29,7 +40,7 @@ class MatchAdapter(private val matches: List<OddsData>) : RecyclerView.Adapter<R
             VIEW_TYPE_MATCH -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.match_item, parent, false)
-                MatchViewHolder(view)
+                MatchViewHolder(view, betRepository, coroutineScope)
             }
             VIEW_TYPE_FOOTER -> {
                 val view = LayoutInflater.from(parent.context)
@@ -52,7 +63,11 @@ class MatchAdapter(private val matches: List<OddsData>) : RecyclerView.Adapter<R
         }
     }
 
-    class MatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MatchViewHolder(
+        itemView: View,
+        private val betRepository: BetRepository,
+        private val coroutineScope: CoroutineScope
+    ) : RecyclerView.ViewHolder(itemView) {
         private val homeBadge: ImageView = itemView.findViewById(R.id.home_badge)
         private val awayBadge: ImageView = itemView.findViewById(R.id.away_badge)
         private val teams: TextView = itemView.findViewById(R.id.teams)
@@ -73,6 +88,81 @@ class MatchAdapter(private val matches: List<OddsData>) : RecyclerView.Adapter<R
             btnHomeOdds.text = match.homeOddsFraction
             btnDrawOdds.text = match.drawOddsFraction
             btnAwayOdds.text = match.awayOddsFraction
+
+            // Check for existing bet and update UI
+            coroutineScope.launch {
+                val existingBet = betRepository.getBet(match.matchId)
+                updateButtonStates(existingBet)
+            }
+
+            // Set click listeners
+            btnHomeOdds.setOnClickListener {
+                handleBetClick(match, BetType.HOME_WIN, match.homeOdds)
+            }
+
+            btnDrawOdds.setOnClickListener {
+                handleBetClick(match, BetType.DRAW, match.drawOdds)
+            }
+
+            btnAwayOdds.setOnClickListener {
+                handleBetClick(match, BetType.AWAY_WIN, match.awayOdds)
+            }
+        }
+
+        private fun handleBetClick(match: OddsData, betType: BetType, odds: Double) {
+            coroutineScope.launch {
+                val existingBet = betRepository.getBet(match.matchId)
+                var newBetState: Bet? = null
+                if (existingBet != null) {
+                    betRepository.removeBet(match.matchId)
+                } else {
+                    newBetState = Bet(match.matchId, betType, odds)
+                    betRepository.saveBet(newBetState)
+                }
+
+                updateButtonStates(newBetState)
+            }
+        }
+
+        private fun updateButtonStates(bet: Bet?) {
+            // Reset all buttons to default state
+            resetButtonState(btnHomeOdds)
+            resetButtonState(btnDrawOdds)
+            resetButtonState(btnAwayOdds)
+
+            // Highlight the selected bet if exists
+            when (bet?.betType) {
+                BetType.HOME_WIN -> {
+                    highlightButton(btnHomeOdds)
+                    hideButtons(btnDrawOdds, btnAwayOdds)
+                }
+                BetType.DRAW -> {
+                    highlightButton(btnDrawOdds)
+                    hideButtons(btnHomeOdds, btnAwayOdds)
+                }
+                BetType.AWAY_WIN -> {
+                    highlightButton(btnAwayOdds)
+                    hideButtons(btnHomeOdds, btnDrawOdds)
+                }
+                null -> { /* No bet selected */ }
+            }
+        }
+
+        private fun resetButtonState(button: Button) {
+            (button.parent as ViewGroup).visibility = View.VISIBLE
+            button.setBackgroundResource(R.drawable.odds_button_background)
+            button.setTextColor(getColor(itemView.context, android.R.color.white))
+        }
+
+        private fun highlightButton(button: Button) {
+            button.setBackgroundResource(R.drawable.odds_button_selected_background)
+            button.setTextColor(getColor(itemView.context, android.R.color.black))
+        }
+
+        private fun hideButtons(vararg buttons: Button) {
+            for (button in buttons) {
+                (button.parent as ViewGroup).visibility = View.INVISIBLE
+            }
         }
     }
 
