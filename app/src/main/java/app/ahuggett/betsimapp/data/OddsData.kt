@@ -15,7 +15,15 @@ data class OddsData(
     val kickoffUtc: String) {
 
     val kickoffDate = Instant.parse(kickoffUtc).atZone(ZoneId.systemDefault())
-    val homeOddsFraction = Fraction(homeOdds - 1).toString()
-    val drawOddsFraction = Fraction(drawOdds - 1).toString()
-    val awayOddsFraction = Fraction(awayOdds - 1).toString()
+    val homeOddsFraction = fractionString(homeOdds)
+    val drawOddsFraction = fractionString(drawOdds)
+    val awayOddsFraction = fractionString(awayOdds)
+}
+
+fun fractionString(odds: Double): String {
+    if (odds % 1 == 0.0) {
+        return "${odds.toInt() - 1} / 1"
+    }
+    val fraction = Fraction(odds - 1)
+    return fraction.toString()
 }
